@@ -1,0 +1,20 @@
+
+category:
+    path:       /category
+    defaults:   { _controller: SpendingsBundle:Category:Index }
+
+category_ajax_call:
+    path:       /category_call
+    defaults:   { _controller: SpendingsBundle:Category:Call }
+
+categories_table:
+    path:       /table
+    defaults:   { _controller: SpendingsBundle:Category:Table }
+
+spendings:
+    path:       /spendings
+    defaults:   { _controller: SpendingsBundle:Spending:Index }
+
+spendings_table:
+    path:       /table
+    defaults:   { _controller: SpendingsBundle:Spending:Table }

@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+
+        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+    {% endblock %}
+
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <hr />
+    <hr />
+    <table id="spendings">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Created</th>
+        </tr>
+        </thead>
+    </table>
+
+    {% block javascript %}
+        {{ parent() }}
+
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready(function() {
+
+                $('#spendings').DataTable( {
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ path('spendings_table') }}",
+                        "type": "POST"
+                    },
+                    "columns": [
+                        { "data": "name" },
+                        { "data": "price" },
+                        { "data": "description" },
+                        { "data": "created" }
+                    ]
+                } );
+
+            });
+        </script>
+    {% endblock %}
+
+{% endblock %}

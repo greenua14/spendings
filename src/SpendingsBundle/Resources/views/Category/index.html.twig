@@ -1,0 +1,76 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+
+        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+    {% endblock %}
+
+Hello -
+
+{{ name }}
+
+
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <hr />
+    <hr />
+    <table id="categories">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+    </table>
+
+    {% block javascript %}
+        {{ parent() }}
+
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready(function() {
+
+                $('#categories').DataTable( {
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ path('categories_table') }}",
+                        "type": "POST"
+                    },
+                    "columns": [
+                        { "data": "name" },
+                        { "data": "description" },
+                        { "data": "created" }
+                    ]
+                } );
+
+                {#$('.submit-btn').on('click', function(e) {#}
+                    {#// prevents the browser from "following" the link#}
+                    {#e.preventDefault();#}
+
+                    {#var form = $(e.target).closest('form');#}
+
+                    {#$.ajax({#}
+                        {#type        : 'POST',#}
+                        {#url         : '{{ path('category_ajax_call') }}',#}
+                        {#data        : form.serialize(),#}
+                        {#success     : function(data) {#}
+                            {#console.log('Added');#}
+                        {#}#}
+                    {#});#}
+                    {#return false;#}
+                {#});#}
+
+            });
+        </script>
+    {% endblock %}
+
+{% endblock %}
